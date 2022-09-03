@@ -7,7 +7,7 @@ exports.up = function(knex) {
         user.increments('id').primary()
         user.string("name", 255).notNullable();
         user.string('email', 255).unique()
-        user.string('mobile_no', 255).notNullable();
+        user.string('mobile_no', 255).unique();
         user.string('password', 255).notNullable();
         user.timestamp('created_at').defaultTo(knex.fn.now())
     })

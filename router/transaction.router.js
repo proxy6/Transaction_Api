@@ -1,4 +1,10 @@
-const router =  require('express').Router()
+const { GetAllTransactionList, GetUserTransactionList, GetSingleTransaction } = require('../controller/transaction.controller')
+const  {isAuthorized}  = require('../middleware/auth')
 
-router.get('/', GetTransactionList)
+const router = require('express').Router()
+
+router.post('/', isAuthorized, GetUserTransactionList)
+router.get('/all', isAuthorized, GetAllTransactionList)
+router.get('/:id', isAuthorized, GetSingleTransaction)
+
 module.exports = router

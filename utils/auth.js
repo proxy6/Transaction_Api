@@ -6,7 +6,10 @@ const SECRET_KEY = `${process.env.JWT_SECRET}`
 
 module.exports = {
     GenerateSignature: async (payload) => {
-        return await jwt.sign(payload, SECRET_KEY, { expiresIn: 1500 /*Expires in 5 mins*/ })
+        return await jwt.sign(payload, SECRET_KEY, { expiresIn: 300 /*Expires in 5 mins*/ })
+    },
+    GenerateRefreshToken: async(payload)=>{
+        return await jwt.sign(payload, SECRET_KEY, { expiresIn: '1d' /*Expires in 1 day*/ })
     },
     HashPassword: async (password) => {
         const salt = bcrypt.genSaltSync(10)
@@ -14,7 +17,6 @@ module.exports = {
         return userPassword
     },
     validatePassword: async (data)=>{
-        console.log(data)
         const {password, savedPassword} = data
         const validatePassword = bcrypt.compareSync(password, savedPassword)
         if(!validatePassword) return false
